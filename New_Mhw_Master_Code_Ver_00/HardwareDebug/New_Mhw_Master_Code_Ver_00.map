@@ -1,0 +1,138 @@
+Renesas Optimizing Linker (W3.04.00 )             31-Jul-2023 14:38:22
+
+*** Options ***
+
+-subcommand=LinkerNew_Mhw_Master_Code_Ver_00.tmp
+-MAKEUD=D:\OneDrive - Nichrome India Ltd\COE Data\Temp_Code\14Head_Mhw_Master_Code_Ver_1.0.13_V4\New_Mhw_Master_Code_Ver_00\HardwareDebug/New_Mhw_Master_Code_Ver_00_l.ud
+-noprelink
+-input=".\src\New_Mhw_Master_Code_Ver_00.obj"
+-input=".\src\calibration_code.obj"
+-input=".\src\can_code.obj"
+-input=".\src\data_flash_code.obj"
+-input=".\src\delay_code.obj"
+-input=".\src\manual_code.obj"
+-input=".\src\modbus_calculations.obj"
+-input=".\src\modbus_code.obj"
+-input=".\src\modbus_records.obj"
+-input=".\src\modbus_responses.obj"
+-input=".\src\runcycle_code.obj"
+-input=".\src/smc_gen/Config_CMT0\Config_CMT0.obj"
+-input=".\src/smc_gen/Config_CMT0\Config_CMT0_user.obj"
+-input=".\src/smc_gen/Config_PORT\Config_PORT.obj"
+-input=".\src/smc_gen/Config_PORT\Config_PORT_user.obj"
+-input=".\src/smc_gen/Config_SCI5\Config_SCI5.obj"
+-input=".\src/smc_gen/Config_SCI5\Config_SCI5_user.obj"
+-input=".\src/smc_gen/Config_WDT\Config_WDT.obj"
+-input=".\src/smc_gen/Config_WDT\Config_WDT_user.obj"
+-input=".\src/smc_gen/general\r_cg_hardware_setup.obj"
+-input=".\src/smc_gen/general\r_smc_cgc.obj"
+-input=".\src/smc_gen/general\r_smc_cgc_user.obj"
+-input=".\src/smc_gen/general\r_smc_interrupt.obj"
+-input=".\src/smc_gen/r_bsp/board/generic_rx231\hwsetup.obj"
+-input=".\src/smc_gen/r_bsp/mcu/all\dbsct.obj"
+-input=".\src/smc_gen/r_bsp/mcu/all\lowlvl.obj"
+-input=".\src/smc_gen/r_bsp/mcu/all\lowsrc.obj"
+-input=".\src/smc_gen/r_bsp/mcu/all\mcu_locks.obj"
+-input=".\src/smc_gen/r_bsp/mcu/all\r_bsp_common.obj"
+-input=".\src/smc_gen/r_bsp/mcu/all\r_bsp_cpu.obj"
+-input=".\src/smc_gen/r_bsp/mcu/all\r_bsp_interrupts.obj"
+-input=".\src/smc_gen/r_bsp/mcu/all\r_bsp_locking.obj"
+-input=".\src/smc_gen/r_bsp/mcu/all\r_bsp_mcu_startup.obj"
+-input=".\src/smc_gen/r_bsp/mcu/all\r_bsp_software_interrupt.obj"
+-input=".\src/smc_gen/r_bsp/mcu/all\r_rx_intrinsic_functions.obj"
+-input=".\src/smc_gen/r_bsp/mcu/all\resetprg.obj"
+-input=".\src/smc_gen/r_bsp/mcu/all\sbrk.obj"
+-input=".\src/smc_gen/r_bsp/mcu/rx231\mcu_clocks.obj"
+-input=".\src/smc_gen/r_bsp/mcu/rx231\mcu_init.obj"
+-input=".\src/smc_gen/r_bsp/mcu/rx231\mcu_interrupts.obj"
+-input=".\src/smc_gen/r_bsp/mcu/rx231\r_bsp_vbatt.obj"
+-input=".\src/smc_gen/r_bsp/mcu/rx231\vecttbl.obj"
+-input=".\src/smc_gen/r_byteq/src\r_byteq.obj"
+-input=".\src/smc_gen/r_datfrx_rx/src/flash_type_1\r_dispatch_1.obj"
+-input=".\src/smc_gen/r_datfrx_rx/src/flash_type_1\r_dm_1.obj"
+-input=".\src/smc_gen/r_datfrx_rx/src/flash_type_2\r_datf_crc.obj"
+-input=".\src/smc_gen/r_datfrx_rx/src/flash_type_2\r_dispatch_2.obj"
+-input=".\src/smc_gen/r_datfrx_rx/src/flash_type_2\r_dm_2.obj"
+-input=".\src/smc_gen/r_datfrx_rx/src/flash_type_3\r_dm_3.obj"
+-input=".\src/smc_gen/r_datfrx_rx/src/flash_type_4\r_dm_4.obj"
+-input=".\src/smc_gen/r_datfrx_rx/src\r_flash_dm_rx_if.obj"
+-input=".\src/smc_gen/r_flash_rx/src/flash_type_1\r_flash_type1.obj"
+-input=".\src/smc_gen/r_flash_rx/src/flash_type_3\r_flash_type3.obj"
+-input=".\src/smc_gen/r_flash_rx/src/flash_type_4\r_flash_type4.obj"
+-input=".\src/smc_gen/r_flash_rx/src\r_flash_fcu.obj"
+-input=".\src/smc_gen/r_flash_rx/src\r_flash_group.obj"
+-input=".\src/smc_gen/r_flash_rx/src\r_flash_nofcu.obj"
+-input=".\src/smc_gen/r_flash_rx/src\r_flash_rx.obj"
+-input=".\src/smc_gen/r_pincfg\Pin.obj"
+-input=".\src/smc_gen/r_pincfg\r_rscan_rx_pinset.obj"
+-input=".\src/smc_gen/r_rscan_rx/src\r_rscan_rx.obj"
+-input=".\src/smc_gen/r_sci_rx/src\r_sci_rx.obj"
+-input=".\src/smc_gen/r_sci_rx/src\r_sci_rx_dmaca.obj"
+-input=".\src/smc_gen/r_sci_rx/src\r_sci_rx_dtc.obj"
+-input=".\src/smc_gen/r_sci_rx/src/targets/rx231\r_sci_rx231.obj"
+-input=".\src/smc_gen/r_sci_rx/src/targets/rx231\r_sci_rx231_data.obj"
+-library=".\New_Mhw_Master_Code_Ver_00.lib"
+-start=SU,SI,B_1,R_1,B_2,R_2,B,R/04,C_1,C_2,C,C$*,D*,W*,L,P*/0FFFE0000,EXCEPTVECT/0FFFFFF80,RESETVECT/0FFFFFFFC
+-output="New_Mhw_Master_Code_Ver_00.abs"
+-form=absolute
+-nomessage
+-vect=_undefined_interrupt_source_isr
+-list=New_Mhw_Master_Code_Ver_00.map
+-nooptimize
+-rom=D=R,D_1=R_1,D_2=R_2
+-cpu=RAM=00000000-00007fff,FIX=00080000-00083fff,FIX=00086000-00087fff,FIX=00088000-0008dfff,FIX=00090000-0009ffff,FIX=000a0000-000bffff,FIX=000c0000-000fffff,ROM=00100000-00101fff,FIX=007fc000-007fc4ff,FIX=007ffc00-007fffff,ROM=fffe0000-ffffffff
+-nologo
+
+*** Error information ***
+
+*** Mapping List ***
+
+SECTION                            START      END         SIZE   ALIGN
+SU
+                                  00000004  00001003      1000   4
+SI
+                                  00001004  00001403       400   4
+B_1
+                                  00001404  00001b31       72e   1
+R_1
+                                  00001b32  00001c73       142   1
+B_2
+                                  00001c74  00001e6f       1fc   2
+R_2
+                                  00001e70  00001e71         2   2
+B
+                                  00001e74  00003527      16b4   4
+R
+                                  00003528  00003a07       4e0   4
+C_1
+                                  fffe0000  fffe0008         9   1
+C_2
+                                  fffe000a  fffe0097        8e   2
+C
+                                  fffe0098  fffe0187        f0   4
+C$DSEC
+                                  fffe0188  fffe01ab        24   4
+C$BSEC
+                                  fffe01ac  fffe01c3        18   4
+C$VECT
+                                  fffe01c4  fffe05c3       400   4
+D
+                                  fffe05c4  fffe0aa3       4e0   4
+D_1
+                                  fffe0aa4  fffe0be5       142   1
+D_2
+                                  fffe0be6  fffe0be7         2   2
+W
+                                  fffe0be8  fffe0be8         0   4
+W_1
+                                  fffe0be8  fffe0c04        1d   1
+W_2
+                                  fffe0c06  fffe0c6b        66   2
+L
+                                  fffe0c6c  fffe0cb1        46   4
+P
+                                  fffe0cb2  ffff1156     104a5   1
+EXCEPTVECT
+                                  ffffff80  fffffffb        7c   4
+RESETVECT
+                                  fffffffc  ffffffff         4   4

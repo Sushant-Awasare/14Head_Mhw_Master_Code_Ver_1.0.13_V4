@@ -1,0 +1,547 @@
+/*
+ * manual.c
+ *
+ *  Created on: Feb 15, 2022
+ *      Author: Dnyaneshwar
+ */
+
+
+#include "modbus_variables.h"
+#include "global_variables.h"
+#include "global_functions.h"
+#include "manual_functions.h"
+#include "manual_variables.h"
+#include "runcycle_variables.h"
+#include "delay_functions.h"
+
+void Manual_Operation()
+{
+	Selected_Heads=0;
+
+
+	Check_Bucket_Selected();
+
+	if(Coil_FeedBucketButton)
+	{
+		//m_command=(Selected_Heads<<1)|0x01;
+		m_command=(Selected_Heads<<1);
+		m_command=m_command&0x3FFFF;
+		Manual_Operation_Number = 1;
+		manual_once_flag  = 1;
+
+		if(Manual_Cycle_Time == 0)
+		{
+			Manual_Operation_Can_Frame();
+			Manual_Cycle_Time = RunCycleTime;
+		}
+		manual_once_flag  = 0;
+
+	}
+	else if(Coil_WeighBucketButton)
+	{
+		//m_command=(Selected_Heads<<1)|0x02;
+		m_command=(Selected_Heads<<1);
+		m_command=m_command&0x3FFFF;
+		Manual_Operation_Number = 2;
+		manual_once_flag  = 1;
+
+		if(Manual_Cycle_Time == 0)
+		{
+			Manual_Operation_Can_Frame();
+			Manual_Cycle_Time = RunCycleTime;
+		}
+
+		if(Flag_AllHead)
+			Power_On_Run = 0;
+
+		manual_once_flag  = 0;
+
+	}
+	else if( Coil_LinearFeederButton)
+	{
+		//m_command=(Selected_Heads<<1)|0x00;
+		m_command=(Selected_Heads<<1);
+		m_command=m_command&0x3FFFF;
+		Manual_Operation_Number = 0;
+		manual_once_flag  = 1;
+		if(Manual_Cycle_Time == 0)
+		{
+			Manual_Operation_Can_Frame();
+			Manual_Cycle_Time = RunCycleTime;
+		}
+		manual_once_flag  = 0;
+	}
+	else if(Coil_SingleCycleButton == 1 && single_cycle_flag == 1)
+	{
+		Coil_MainFeederButton   = 0;
+		Coil_LinearFeederButton = 0;
+		Coil_FeedBucketButton   = 0;
+		Coil_WeighBucketButton  = 0;
+		Coil_AuxBucketButton    = 0;
+		Coil_ContCycleButton    = 0;
+		Coil_DrainCycleButton 	= 0;
+		single_cycle_flag       = 0;
+		//m_command=(Selected_Heads<<1)|0x03;
+
+		m_command=(Selected_Heads<<1);
+		m_command=m_command&0x3FFFF;
+		Manual_Operation_Number = 3;
+		manual_once_flag  = 1;
+		if(Manual_Cycle_Time == 0)
+		{
+			Manual_Operation_Can_Frame();
+			Manual_Cycle_Time = RunCycleTime;
+		}
+		manual_once_flag  = 0;
+	}
+	else if(Coil_ContCycleButton)
+	{
+		Coil_MainFeederButton 	= 0;
+		Coil_LinearFeederButton	= 0;
+		Coil_FeedBucketButton 	= 0;
+		Coil_WeighBucketButton 	= 0;
+//		Coil_AuxBucketButton 	= 0;
+		Coil_SingleCycleButton 	= 0;
+		Coil_DrainCycleButton 	= 0;
+
+		if(Flag_AllHead == 1 && all_drain_flag == 0 )
+		{
+			all_drain_flag = 1;
+			Drain();
+			all_drain_flag = 0;
+		}
+		else
+		{
+			//m_command=(Selected_Heads<<1)|0x04;
+			m_command=(Selected_Heads<<1);
+			m_command=m_command&0x3FFFF;
+			Manual_Operation_Number = 4;
+			manual_once_flag  = 1;
+			if(Manual_Cycle_Time == 0)
+			{
+				Manual_Operation_Can_Frame();
+				Manual_Cycle_Time = RunCycleTime;
+			}
+			manual_once_flag  = 0;
+		}
+	}
+
+	else if(Coil_AuxBucketButton)
+	{
+		m_command = 0;
+		Manual_Operation_Number = 5;
+
+		if(Manual_Cycle_Time == 0)
+		{
+			Manual_Operation_Can_Frame();
+			Manual_Cycle_Time = RunCycleTime;
+		}
+		manual_once_flag  = 0;
+	}
+	else if(Coil_MainFeederButton)
+	{
+		m_command = 0;
+		Manual_Operation_Number = 6;
+
+		if(Manual_Cycle_Time == 0)
+		{
+			Manual_Operation_Can_Frame();
+			Manual_Cycle_Time = RunCycleTime;
+		}
+		manual_once_flag  = 0;
+	}
+}
+
+
+void Drain()
+{
+	if(send_time == 0 && send_time_flag == 0)
+	{
+		Selected_Heads = 0;
+
+	if(Coil_Head15Button == 1)
+	{
+		Selected_Heads=Selected_Heads|0x0;
+		Selected_Heads<<=1;
+	}
+	if(Coil_Head14Button == 1)
+	{
+		Selected_Heads=Selected_Heads|0x0;
+		Selected_Heads<<=1;
+	}
+	if(Coil_Head13Button == 1)
+	{
+		Selected_Heads=Selected_Heads|0x0;
+		Selected_Heads<<=1;
+	}
+	if(Coil_Head12Button == 1)
+	{
+		Selected_Heads=Selected_Heads|0x0;
+		Selected_Heads<<=1;
+	}
+	if(Coil_Head11Button == 1)
+	{
+		Selected_Heads=Selected_Heads|0x0;
+		Selected_Heads<<=1;
+	}
+	if(Coil_Head10Button == 1)
+	{
+		Selected_Heads=Selected_Heads|0x0;
+		Selected_Heads<<=1;
+	}
+	if(Coil_Head9Button == 1)
+	{
+		Selected_Heads=Selected_Heads|0x0;
+		Selected_Heads<<=1;
+	}
+	if(Coil_Head8Button == 1)
+	{
+		Selected_Heads=Selected_Heads|0x0;
+		Selected_Heads<<=1;
+	}
+	if(Coil_Head7Button == 1)
+	{
+		Selected_Heads=Selected_Heads|0x0;
+		Selected_Heads<<=1;
+	}
+	if(Coil_Head6Button == 1)
+	{
+		Selected_Heads=Selected_Heads|0x0;
+		Selected_Heads<<=1;
+	}
+	if(Coil_Head5Button == 1)
+	{
+		Selected_Heads=Selected_Heads|0x0;
+		Selected_Heads<<=1;
+	}
+
+	if(Coil_Head4Button == 1)
+	{
+		Selected_Heads=Selected_Heads|0x1;
+		Selected_Heads<<=1;
+	}
+	if(Coil_Head3Button == 1)
+	{
+		Selected_Heads=Selected_Heads|0x1;
+		Selected_Heads<<=1;
+	}
+	if(Coil_Head2Button == 1)
+	{
+		Selected_Heads=Selected_Heads|0x1;
+		Selected_Heads<<=1;
+	}
+	if(Coil_Head1Button == 1)
+	{
+		Selected_Heads=Selected_Heads|0x1;
+		Selected_Heads<<=1;
+	}
+
+	Clear_Watchdog();
+	//m_command=(Selected_Heads<<1)|0x04;
+	m_command=(Selected_Heads<<1);
+	m_command=m_command&0x3FFFF;
+	Manual_Operation_Number = 4;
+	Manual_Operation_Can_Frame();
+
+	send_time = RunCycleTime;
+	send_time_flag = 1;
+
+}	//mS_Delay(1000);
+	Clear_Watchdog();
+
+	if(send_time == 0 && send_time_flag == 1)
+	{
+	   Selected_Heads = 0;
+
+	if(Coil_Head15Button == 1)
+	{
+		Selected_Heads=Selected_Heads|0x0;
+		Selected_Heads<<=1;
+	}
+	if(Coil_Head14Button == 1)
+	{
+		Selected_Heads=Selected_Heads|0x0;
+		Selected_Heads<<=1;
+	}
+	if(Coil_Head13Button == 1)
+	{
+		Selected_Heads=Selected_Heads|0x0;
+		Selected_Heads<<=1;
+	}
+	if(Coil_Head12Button == 1)
+	{
+		Selected_Heads=Selected_Heads|0x0;
+		Selected_Heads<<=1;
+	}
+	if(Coil_Head11Button == 1)
+	{
+		Selected_Heads=Selected_Heads|0x0;
+		Selected_Heads<<=1;
+	}
+	if(Coil_Head10Button == 1)
+	{
+		Selected_Heads=Selected_Heads|0x0;
+		Selected_Heads<<=1;
+	}
+	if(Coil_Head9Button == 1)
+	{
+		Selected_Heads=Selected_Heads|0x0;
+		Selected_Heads<<=1;
+	}
+	if(Coil_Head8Button == 1)
+	{
+		Selected_Heads=Selected_Heads|0x0;
+		Selected_Heads<<=1;
+	}
+	if(Coil_Head7Button == 1)
+	{
+		Selected_Heads=Selected_Heads|0x1;
+		Selected_Heads<<=1;
+	}
+	if(Coil_Head6Button == 1)
+	{
+		Selected_Heads=Selected_Heads|0x1;
+		Selected_Heads<<=1;
+	}
+	if(Coil_Head5Button == 1)
+	{
+		Selected_Heads=Selected_Heads|0x1;
+		Selected_Heads<<=1;
+	}
+
+	if(Coil_Head4Button == 1)
+	{
+		Selected_Heads=Selected_Heads|0x0;
+		Selected_Heads<<=1;
+	}
+	if(Coil_Head3Button == 1)
+	{
+		Selected_Heads=Selected_Heads|0x0;
+		Selected_Heads<<=1;
+	}
+	if(Coil_Head2Button == 1)
+	{
+		Selected_Heads=Selected_Heads|0x0;
+		Selected_Heads<<=1;
+	}
+	if(Coil_Head1Button == 1)
+	{
+		Selected_Heads=Selected_Heads|0x0;
+		Selected_Heads<<=1;
+	}
+
+	Clear_Watchdog();
+	//m_command=(Selected_Heads<<1)|0x04;
+	m_command=(Selected_Heads<<1);
+	m_command=m_command&0x3FFFF;
+	Manual_Operation_Number = 4;
+	Manual_Operation_Can_Frame();
+
+
+
+	//mS_Delay(1000);
+	Clear_Watchdog();
+	send_time = RunCycleTime;
+	send_time_flag = 2;
+}
+
+	if(send_time == 0 && send_time_flag == 2)
+	{
+	Selected_Heads = 0;
+	if(Coil_Head15Button == 1)
+	{
+		Selected_Heads=Selected_Heads|0x0;
+		Selected_Heads<<=1;
+	}
+	if(Coil_Head14Button == 1)
+	{
+		Selected_Heads=Selected_Heads|0x0;
+		Selected_Heads<<=1;
+	}
+	if(Coil_Head13Button == 1)
+	{
+		Selected_Heads=Selected_Heads|0x0;
+		Selected_Heads<<=1;
+	}
+	if(Coil_Head12Button == 1)
+	{
+		Selected_Heads=Selected_Heads|0x0;
+		Selected_Heads<<=1;
+	}
+	if(Coil_Head11Button == 1)
+	{
+		Selected_Heads=Selected_Heads|0x0;
+		Selected_Heads<<=1;
+	}
+	if(Coil_Head10Button == 1)
+	{
+		Selected_Heads=Selected_Heads|0x1;
+		Selected_Heads<<=1;
+	}
+	if(Coil_Head9Button == 1)
+	{
+		Selected_Heads=Selected_Heads|0x1;
+		Selected_Heads<<=1;
+	}
+	if(Coil_Head8Button == 1)
+	{
+		Selected_Heads=Selected_Heads|0x1;
+		Selected_Heads<<=1;
+	}
+	if(Coil_Head7Button == 1)
+	{
+		Selected_Heads=Selected_Heads|0x0;
+		Selected_Heads<<=1;
+	}
+	if(Coil_Head6Button == 1)
+	{
+		Selected_Heads=Selected_Heads|0x0;
+		Selected_Heads<<=1;
+	}
+	if(Coil_Head5Button == 1)
+	{
+		Selected_Heads=Selected_Heads|0x0;
+		Selected_Heads<<=1;
+	}
+
+	if(Coil_Head4Button == 1)
+	{
+		Selected_Heads=Selected_Heads|0x0;
+		Selected_Heads<<=1;
+	}
+	if(Coil_Head3Button == 1)
+	{
+		Selected_Heads=Selected_Heads|0x0;
+		Selected_Heads<<=1;
+	}
+	if(Coil_Head2Button == 1)
+	{
+		Selected_Heads=Selected_Heads|0x0;
+		Selected_Heads<<=1;
+	}
+	if(Coil_Head1Button == 1)
+	{
+		Selected_Heads=Selected_Heads|0x0;
+		Selected_Heads<<=1;
+	}
+
+	Clear_Watchdog();
+	//m_command=(Selected_Heads<<1)|0x04;
+	m_command=(Selected_Heads<<1);
+	m_command=m_command&0x3FFFF;
+	Manual_Operation_Number = 4;
+	Manual_Operation_Can_Frame();
+
+
+//	mS_Delay(1000);
+//	manual_once_flag  = 0;
+	Clear_Watchdog();
+	Selected_Heads = 0;
+	send_time = RunCycleTime;
+	send_time_flag = 3;
+	}
+
+	if(send_time == 0 && send_time_flag == 3)
+	{
+	Selected_Heads = 0;
+	if(Coil_Head15Button == 1)
+	{
+		Selected_Heads=Selected_Heads|0x0;
+		Selected_Heads<<=1;
+	}
+	if(Coil_Head14Button == 1)
+	{
+		Selected_Heads=Selected_Heads|0x1;
+		Selected_Heads<<=1;
+	}
+	if(Coil_Head13Button == 1)
+	{
+		Selected_Heads=Selected_Heads|0x1;
+		Selected_Heads<<=1;
+	}
+	if(Coil_Head12Button == 1)
+	{
+		Selected_Heads=Selected_Heads|0x1;
+		Selected_Heads<<=1;
+	}
+	if(Coil_Head11Button == 1)
+	{
+		Selected_Heads=Selected_Heads|0x1;
+		Selected_Heads<<=1;
+	}
+	if(Coil_Head10Button == 1)
+	{
+		Selected_Heads=Selected_Heads|0x0;
+		Selected_Heads<<=1;
+	}
+	if(Coil_Head9Button == 1)
+	{
+		Selected_Heads=Selected_Heads|0x0;
+		Selected_Heads<<=1;
+	}
+	if(Coil_Head8Button == 1)
+	{
+		Selected_Heads=Selected_Heads|0x0;
+		Selected_Heads<<=1;
+	}
+	if(Coil_Head7Button == 1)
+	{
+		Selected_Heads=Selected_Heads|0x0;
+		Selected_Heads<<=1;
+	}
+	if(Coil_Head6Button == 1)
+	{
+		Selected_Heads=Selected_Heads|0x0;
+		Selected_Heads<<=1;
+	}
+	if(Coil_Head5Button == 1)
+	{
+		Selected_Heads=Selected_Heads|0x0;
+		Selected_Heads<<=1;
+	}
+
+	if(Coil_Head4Button == 1)
+	{
+		Selected_Heads=Selected_Heads|0x0;
+		Selected_Heads<<=1;
+	}
+	if(Coil_Head3Button == 1)
+	{
+		Selected_Heads=Selected_Heads|0x0;
+		Selected_Heads<<=1;
+	}
+	if(Coil_Head2Button == 1)
+	{
+		Selected_Heads=Selected_Heads|0x0;
+		Selected_Heads<<=1;
+	}
+	if(Coil_Head1Button == 1)
+	{
+		Selected_Heads=Selected_Heads|0x0;
+		Selected_Heads<<=1;
+	}
+
+	Clear_Watchdog();
+	//m_command=(Selected_Heads<<1)|0x04;
+	m_command=(Selected_Heads<<1);
+	m_command=m_command&0x3FFFF;
+	Manual_Operation_Number = 4;
+	Manual_Operation_Can_Frame();
+
+
+	manual_once_flag  = 0;
+	Clear_Watchdog();
+	Selected_Heads = 0;
+	send_time = RunCycleTime;
+	send_time_flag = 0;
+
+	Power_On_Run = 1;
+
+	if(Coil_RunStartButton == 1 || Coil_RunButton == 1)
+	{
+		cycle_equal_time_flag = 1;
+		cycle_equal_time      = 4000;
+	}
+
+	}
+}

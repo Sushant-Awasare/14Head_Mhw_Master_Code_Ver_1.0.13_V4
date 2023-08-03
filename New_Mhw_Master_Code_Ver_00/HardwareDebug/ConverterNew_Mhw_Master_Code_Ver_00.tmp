@@ -1,0 +1,8 @@
+-MAKEUD=D:\OneDrive - Nichrome India Ltd\COE Data\Temp_Code\14Head_Mhw_Master_Code_Ver_1.0.13_V4\New_Mhw_Master_Code_Ver_00\HardwareDebug\\New_Mhw_Master_Code_Ver_00_c.ud
+-input="New_Mhw_Master_Code_Ver_00.abs"
+-form=stype
+-output="New_Mhw_Master_Code_Ver_00.mot"
+-byte_count=10
+-nologo
+-nomessage
+-exit
